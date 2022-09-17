@@ -7,6 +7,7 @@ public class PlayerControllerX : MonoBehaviour
     private Rigidbody playerRb;
     private float speed = 500;
     private GameObject focalPoint;
+    public GameObject turboSmoke;
 
     public bool hasPowerup;
     public GameObject powerupIndicator;
@@ -14,6 +15,7 @@ public class PlayerControllerX : MonoBehaviour
 
     private float normalStrength = 10; // how hard to hit enemy without powerup
     private float powerupStrength = 25; // how hard to hit enemy with powerup
+    private float turboBoost = 10; // Boost from pressing the Space Bar
     
     void Start()
     {
@@ -29,6 +31,13 @@ public class PlayerControllerX : MonoBehaviour
 
         // Set powerup indicator position to beneath player
         powerupIndicator.transform.position = transform.position + new Vector3(0, -0.6f, 0);
+
+        // Add Turbo boost force when you press the space bar
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            playerRb.AddForce(focalPoint.transform.forward * turboBoost, ForceMode.Impulse);
+            turboSmoke.GetComponent<ParticleSystem>().Play();
+        }
 
     }
 
